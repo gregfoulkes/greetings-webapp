@@ -44,8 +44,24 @@ app.post('/greeted', function(req, res) {
 
 
   greetings.greetPerson(name, language)
- console.log(language)
-// console.log(name)
+
+  var nameData = {
+    nameGreeted: greetings.greeting(),
+    nameCounter: greetings.greetCountNumber(),
+    nameMap: greetings.map()
+  }
+
+  res.render('greetings', nameData);
+
+});
+
+app.get('/greeted/:name/:language', function(req, res) {
+
+  var name = req.params.name;
+  var language = req.params.language
+
+
+  greetings.greetPerson(name, language)
 
   var nameData = {
     nameGreeted: greetings.greeting(),
@@ -75,13 +91,13 @@ app.get('/counter/:name', function(req, res){
 res.render('counter',{nameMap,theMessage:message})
 })
 
-// app.get('/reset', function(req,res){
-//
-//   var nameData = {
-//     // nameGreeted: greetings.greeting(),
-//     // nameCounter: greetings.greetCountNumber(),
-//     nameMap: greetings.reset()
-//   }
-//
-// res.redirect('/greeted', nameData)
-// });
+app.get('/reset', function(req,res){
+
+  var nameData = {
+    // nameGreeted: greetings.greeting(),
+    // nameCounter: greetings.greetCountNumber(),
+    nameMap: greetings.reset()
+  }
+
+res.redirect('/greeted')
+});
