@@ -1,0 +1,19 @@
+
+
+
+<div class="container center ">
+
+<h1>People You have Greeted</h1>
+    <table style='margin-bottom:10px; margin-top: 5px;' class='mapTable'>
+   {{#each nameMap}}
+ <tr >
+   <td class='center' ><a href="/counter/{{@key}}"><button  class='tableButton'type="button" name="button"><strong>{{@key}}</strong></button></a></td>
+ </tr>
+
+ {{/each}}
+
+</table>
+
+  <span >{{theMessage}}</span>
+
+</div>

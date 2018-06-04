@@ -1,0 +1,154 @@
+html,
+body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  left: 0;
+  top: 0;
+  font-size: 100%;
+  font-family: courier;
+  font-style: normal;
+  font: monospace;
+}
+
+.container {
+  width: 90%;
+  padding: 16px;
+  margin-left: auto;
+  margin-right: auto;
+
+}
+
+.center {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.nameBox{
+  width: 100%;
+}
+
+.name{
+  width:15%;
+  float:left;
+}
+
+.nameHeading {
+  padding: 1px;
+  margin: 10px;
+  background-color: #f1f1f1;
+  height: 50px;
+  border-radius: 5px;
+}
+
+
+
+.greetInputName{
+  height: 20px;
+  width: 65%;
+  float: left;
+  margin-bottom: 25px;
+
+}
+.tableButton{
+border-radius: 5px;
+border: solid black 1px;
+padding: 3px;
+width: 100px;
+height:20px;
+background-color: white;
+/* border-shadow: 5px; */
+}
+
+.mapTable{
+  width: 100%;
+}
+
+.counter {
+  width:20%;
+  float: left;
+}
+
+.radioButtons{
+  /* margin-top:30px; */
+  width: 100%;
+  float:left;
+  font-family: monospace;
+  font-style: normal;
+  font: courier;
+  }
+
+  .clickButtons{
+    width: 100%;
+    float: left;
+  }
+
+.language{
+  width:33%;
+  float:left;
+}
+
+.radioBtn{
+  margin-top: 25px;
+  width:75%;
+}
+
+.radioBtn h3{
+  margin-top: 25px;
+  width:95%;
+}
+
+.greetButton{
+  width:45%;
+  float: left;
+}
+
+.resetButton {
+  width:45%;
+  float: left;
+
+}
+.clickButtons {
+  width: 100%;
+}
+.greetMeBtn{
+  /* font-size: 20px; */
+   font: courier;
+   font-family: monospace;
+   border-radius:5px;
+   width:100px;
+   height: 50px;
+   margin: 10px;
+   background-color: white;
+}
+
+.resetTheBtn{
+  /* font-size: 20px; */
+   font: courier;
+   font-family: monospace;
+   border-radius:5px;
+   width:100px;
+   height: 50px;
+   margin: 10px;
+   background-color: white;
+
+}
+
+.DisplayList span{
+  text-align: center;
+  /* padding: 5px; */
+  margin:10px;
+  width:90%;
+  float: left;
+}
+
+.DisplayField {
+  padding: 12px;
+  text-align: center;
+  /* background-color: #f1f1f1; */
+  margin:20px;
+  width:90%;
+  float: left;
+}
