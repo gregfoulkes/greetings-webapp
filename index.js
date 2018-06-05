@@ -82,7 +82,7 @@ app.get('/counter', function(req, res){
 
 });
 
-app.get('/counter/:name/:language', function(req, res){
+app.get('/counter/:name', function(req, res){
 
   var name = req.params.name
   var name = req.params.language
