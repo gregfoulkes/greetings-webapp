@@ -23,7 +23,6 @@ const pool = new Pool({
 
 const greetings = Greet(pool)
 
-
 //start the server
 var server = app.listen(4008);
 
@@ -90,19 +89,6 @@ app.get('/counter', async function(req, res, next) {
 
 });
 
-app.get('/counter:name', async function(req, res, next) {
-  try {
-   let name = req.params.name
-    let theMessage = await greetings.greetedUser(name)
-    res.render('counter', {theMessage});
-} catch (err) {
-    return next(err)
-  }
-  console.log(theMessage)
-   res.render('counter', { nameList});
-
-});
-
 app.get('/reset', async function(req, res, next) {
   try{
    await greetings.reset()
@@ -114,6 +100,20 @@ app.get('/reset', async function(req, res, next) {
   }
 
 });
+
+// app.get('/counter:name', async function(req, res, next) {
+//   try {
+//    let name = req.params.name
+//     let theMessage = await greetings.greetedUser(name)
+//     res.render('counter', {theMessage});
+// } catch (err) {
+//     return next(err)
+//   }
+//   console.log(theMessage)
+//    res.render('counter', { nameList});
+//
+// });
+
 //
 // app.get('/counter:name', async function(req, res) {
 //
