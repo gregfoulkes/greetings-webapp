@@ -1,81 +1,143 @@
 let assert = require("assert");
+
+var postgres = require('pg')
+const Pool = postgres.Pool
+
+const pool = new Pool({
+  connectionString: 'postgresql://coder:1234@localhost:5432/greetings'
+})
 const GreetFunction = require('../greetingsExpress')
 
+describe('greetName function', function() {
 
-describe ('greetCounter Function', function(){
-  it ('Should return a greet count of 1',function(){
-
-    var callGreetFunction = GreetFunction()
-
-    callGreetFunction.greetPerson('Greg')
-    callGreetFunction.greetPerson('Greg')
-
-    assert.equal(callGreetFunction.greetCountNumber(),1);
+  beforeEach(async function() {
+    await pool.query("delete from names");
   });
 
-  it ('Should return a greet count of 2',function(){
+  it('Should greet Andre in English and return Hello Andre', async function() {
 
-    var callGreetFunction = GreetFunction()
+    var callGreetFunction = GreetFunction(pool);
+    let theMessage = await callGreetFunction.greetPerson('Andre', 'english');
+    assert.equal('Hello, Andre', theMessage);
 
-    callGreetFunction.greetPerson('Andre')
-    callGreetFunction.greetPerson('Greg')
-
-    assert.equal(callGreetFunction.greetCountNumber(),2);
   });
 
-  it ('Should return a greet count of 3',function(){
+  it('Should greet Ayabonga in Xhosa and return Molo Ayabonga', async function() {
 
-    var callGreetFunction = GreetFunction()
+    var callGreetFunction = GreetFunction(pool)
+    let theMessage = await callGreetFunction.greetPerson('Ayabonga', 'xhosa');
 
-    callGreetFunction.greetPerson('Andre')
-    callGreetFunction.greetPerson('Greg')
-    callGreetFunction.greetPerson('Ayabonga')
+    assert.equal(theMessage, 'Molo, Ayabonga')
+  });
 
+  it('Should greet Ross in Afrikaans and return More Ross', async function() {
+
+    var callGreetFunction = GreetFunction(pool)
+    let theMessage = await callGreetFunction.greetPerson('Ross', 'afrikaans');
+
+    assert.equal(theMessage, 'More, Ross')
+  });
+
+  //
+  // it('Should return a list of names', async function() {
+  //
+  //   var callGreetFunction = GreetFunction(pool);
+  //   await callGreetFunction.greetPerson('Andre', 'english');
+  //   await callGreetFunction.greetPerson('Ross', 'english');
+  //
+  //   let greetedPeople = await callGreetFunction.list();
+  //   //console.log(greetedPeople);
+  //   // let user = greetedPeople.find(function(user){ return user.first_name.trim() === 'Andre' });
+  //   assert.deepEqual([ {id: 1,first_name: 'Andre', greet_counter: 1}, {id: 1,first_name: 'Ross', greet_counter: 1}], greetedPeople);
+  //
+  // });
+
+
+  it('Should return a greet count of 1', async function() {
+
+    var callGreetFunction = GreetFunction(pool)
+
+    await callGreetFunction.greetPerson('Greg')
+    await callGreetFunction.greetPerson('Greg')
+    var theNumber = await callGreetFunction.greetCountNumber()
+
+    assert.equal(theNumber, 1);
+  });
+
+  it('Should return a greet count of 2', async function() {
+
+    var callGreetFunction = GreetFunction(pool)
+
+    await callGreetFunction.greetPerson('Andre')
+    await callGreetFunction.greetPerson('Greg')
+    var theNumber = await callGreetFunction.greetCountNumber()
+
+    assert.equal(theNumber, 2);
+  });
+
+  it('Should return a greet count of 3', async function() {
+
+    var callGreetFunction = GreetFunction(pool)
+
+    await callGreetFunction.greetPerson('Andre')
+    await callGreetFunction.greetPerson('Greg')
+    await callGreetFunction.greetPerson('Ayabonga')
+    var theNumber = await callGreetFunction.greetCountNumber()
     //assert.equal(callGreetFunction.greetPerson('Andre','English'), 'Hello Andre')
-    assert.equal(callGreetFunction.greetCountNumber(),3);
+    assert.equal(theNumber, 3);
   });
 
-  it ('Should greet Andre in English and return Hello Andre',function(){
 
-    var callGreetFunction = GreetFunction()
-    callGreetFunction.greetPerson('Andre','english')
-    assert.equal(callGreetFunction.greeting(), 'Hello, Andre')
+
+  it('Should return Greg greeted 2 times', async function() {
+
+    var callGreetFunction = GreetFunction(pool)
+
+    await callGreetFunction.greetPerson('Greg')
+    await callGreetFunction.greetPerson('Greg')
+    var theNumber = await callGreetFunction.numberOfGreets()
+
+    assert.equal(theNumber, 2);
   });
 
-  it ('Should greet Ayabonga in Xhosa and return Molo Ayabonga',function(){
+  it('Should empty the database', async function() {
 
-    var callGreetFunction = GreetFunction()
+    var callGreetFunction = GreetFunction(pool)
 
-    callGreetFunction.greetPerson('Ayabonga','xhosa')
+    await callGreetFunction.greetPerson('Greg')
+    await callGreetFunction.greetPerson('Greg')
+    var empty = await callGreetFunction.reset()
 
-    assert.equal(callGreetFunction.greeting(), 'Molo, Ayabonga')
+    assert.deepEqual(empty, []);
   });
 
-  it ('Should greet Ross in Afrikaans and return More Ross',function(){
-
-    var callGreetFunction = GreetFunction()
-    callGreetFunction.greetPerson('Ross','afrikaans')
-
-    assert.equal(callGreetFunction.greeting(), 'More, Ross')
-  });
-
-  it ('Should return map { Ross: 0, Luvuyo: 0, Aya: 0 }',function(){
-
-    var callGreetFunction = GreetFunction()
-    callGreetFunction.greetPerson('Ross','afrikaans')
-    callGreetFunction.greetPerson('Luvuyo','xhosa')
-    callGreetFunction.greetPerson('Aya','english')
-
-    assert.deepEqual(callGreetFunction.map(), { Ross: 1, Luvuyo: 1, Aya: 1 })
+  after(async function() {
+    await pool.end();
   });
 });
 
-describe('greetCounter Function', function(){
-  it('Should increment value at key when name greeted more than once', function(){
-    var callGreetings = GreetFunction()
-    callGreetings.greetPerson('Ross','afrikaans')
-    callGreetings.greetPerson('Ross','afrikaans')
 
-  assert.deepEqual(callGreetings.map(),{Ross: 2} )
-  });
-});
+
+
+
+//
+//   it ('Should return map { Ross: 0, Luvuyo: 0, Aya: 0 }',function(){
+//
+//     var callGreetFunction = GreetFunction(pool)
+//     callGreetFunction.greetPerson('Ross','afrikaans')
+//     callGreetFunction.greetPerson('Luvuyo','xhosa')
+//     callGreetFunction.greetPerson('Aya','english')
+//
+//     assert.deepEqual(callGreetFunction.map(), { Ross: 1, Luvuyo: 1, Aya: 1 })
+//   });
+// });
+//
+// describe('greetCounter Function', function(){
+//   it('Should increment value at key when name greeted more than once', function(){
+//     var callGreetings = GreetFunction(pool)
+//     callGreetings.greetPerson('Ross','afrikaans')
+//     callGreetings.greetPerson('Ross','afrikaans')
+//
+//   assert.deepEqual(callGreetings.map(),{Ross: 2} )
+//   });
+//

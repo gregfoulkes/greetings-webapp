@@ -4,16 +4,30 @@
 <div class="container center ">
 
 <h1>People You have Greeted</h1>
-    <table style='margin-bottom:10px; margin-top: 5px;' class='mapTable'>
-   {{#each nameMap}}
- <tr >
-   <td class='center' ><a href="/counter/{{@key}}"><button  class='tableButton'type="button" name="button"><strong>{{@key}}</strong></button></a></td>
- </tr>
 
+<a href="/"><button  class='tableButton'type="button" name="button"><strong>Back</strong></button></a>
+
+    <!-- <table style='margin-bottom:10px; margin-top: 5px;' class='mapTable'>
+      {{#each nameList}}
+
+ <tr >
+   <td class='center' ><button  class='tableButton'type="button" name="button"><strong>{{first_name}}</strong></button></td>
+   <td class='center' ><a href="/counter/{{first_name}}"><button  class='tableButton'type="button" name="button"><strong>{{first_name}}</strong></button></a></td>
+
+ </tr>
  {{/each}}
 
-</table>
 
-  <span >{{theMessage}}</span>
+</table> -->
+<!-- <span>Hello,{{first_name}}  has been greeted {{greet_counter}} time(s)</span> -->
 
+{{#each nameList}}
+<div class="spanMessage">
+
+</div>
+<span >{{message}}</span></br>
+{{/each}}
+
+  <!-- <span>Hello,{{first_name}}  has been greeted {{greet_counter}} time(s)</span> -->
+  <!-- <span >{{theMessage}}</span> -->
 </div>
