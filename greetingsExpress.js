@@ -50,26 +50,22 @@ module.exports = function(pool) {
     return result.rows
   }
 
-  async function returnMessage(name) {
-    if (name != '') {
-      let user = await pool.query('SELECT * FROM names WHERE first_name = $1', [name]);
-      let greet_counter = 0;
-      if (user.rows.length > 0) {
-        greet_counter = user.rows[0].greet_counter;
-        let first_name = user.rows[0].first_name;
-        let message = 'Hello, ${first_name} has been greeted ${greet_counter} time(s)';
-        return message;
-      } else {
-        return 'Name not found'
-      }
-    }
-  }
+  // async function returnMessage(name) {
+  //   if (name != '') {
+  //     let user = await pool.query('SELECT * FROM names WHERE first_name = $1', [name]);
+  //     let greet_counter = 0;
+  //     if (user.rows.length > 0) {
+  //       greet_counter = user.rows[0].greet_counter;
+  //       let first_name = user.rows[0].first_name;
+  //       let message = 'Hello, ${first_name} has been greeted ${greet_counter} time(s)';
+  //       return message;
+  //     } else {
+  //       return 'Name not found'
+  //     }
+  //   }
+  // }
 
-  async function greetedUser(name) {
-    let user = await pool.query('SELECT * FROM names WHERE first_name = $1', [name]);
-    return user.rows;
-  }
-  async function resetMap() {
+  async function resetDataBase() {
     let results = await pool.query('delete from names')
   return results.rows
   }
@@ -81,7 +77,7 @@ module.exports = function(pool) {
     numberOfGreets: getNumberofGreets,
     greetCountNumber: greetCounterLength,
     // theMessage: returnMessage,
-    reset: resetMap
+    reset: resetDataBase
 
   }
 }

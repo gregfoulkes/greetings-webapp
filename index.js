@@ -8,8 +8,17 @@ const Greet = require('./greetingsExpress')
 var postgres = require('pg')
 const Pool = postgres.Pool
 
+
+let useSSL = false;
+if(process.env.DATABASE_URL){
+  useSSL = true;
+}
+
+const connectionString = process.env.DATABASE_URL || 'postgresql://coder:1234@localhost:5432/greetings'
+
 const pool = new Pool({
-  connectionString: 'postgresql://coder:1234@localhost:5432/greetings'
+  connectionString,
+  ssl:useSSL
 })
 
 const greetings = Greet(pool)
@@ -97,6 +106,8 @@ app.get('/counter:name', async function(req, res, next) {
 app.get('/reset', async function(req, res, next) {
   try{
    await greetings.reset()
+   console.log(   await greetings.reset()
+)
     res.redirect('/')
   }catch(err){
     return next(err)
