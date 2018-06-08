@@ -8,7 +8,6 @@ const Greet = require('./greetingsExpress')
 var postgres = require('pg')
 const Pool = postgres.Pool
 
-
 let useSSL = false;
 if(process.env.DATABASE_URL){
   useSSL = true;
@@ -24,7 +23,7 @@ const pool = new Pool({
 const greetings = Greet(pool)
 
 //start the server
-var server = app.listen(4008);
+//var server = app.listen(4008);
 
 app.use(express.static('public'));
 
@@ -129,39 +128,3 @@ app.get('/reset', async function(req, res, next) {
 //   }
 //
 // })
-
-
-// app.get('/greeted', async function(req, res){
-//
-//   try{
-//     let names = await query.pool('select * from users');
-//     let greetedNames = await names.rows
-//     res.render('greetings', {greetedNames})
-//   } catch (err) {
-//       return next(err)
-//     }
-// });
-
-// app.get('/greeted/:name', function(req, res) {
-//
-//   // var name = req.params.name;
-//   // var language = req.params.language
-//   //
-//   // var nameData = {
-//   //   nameGreeted: greetings.greetPerson(name, language),
-//   //
-//   //   nameCounter: greetings.greetCountNumber(),
-//   //   nameMap: greetings.map()
-//   // }
-//
-//   res.render('greetings', nameData);
-//
-//   console.log('...');
-//   let users = await greetings.list();
-//   console.log(users);
-//
-//   res.render('counter', {
-//      nameList : users
-//   })
-//
-// });

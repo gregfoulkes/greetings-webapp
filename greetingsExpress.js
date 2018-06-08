@@ -4,7 +4,6 @@ module.exports = function(pool) {
   var nameMap = {}
 
   async function greetPerson(name, type) {
-    //  console.log(pool)
 
     if (name != '') {
       let result = await pool.query('select * from names where first_name = $1', [name])
@@ -38,46 +37,45 @@ module.exports = function(pool) {
     return result.rowCount
   }
 
-  async function getNumberofGreets() {
-    let result = await pool.query('select greet_counter from names where first_name = $1', [name])
-    console.log(result)
-    return result.greet_counter
-  }
-
   async function listOfAllGreetedNames() {
     var result = await pool.query('SELECT * FROM names ')
     //  console.log(result)
     return result.rows
   }
 
-  // async function returnMessage(name) {
-  //   if (name != '') {
-  //     let user = await pool.query('SELECT * FROM names WHERE first_name = $1', [name]);
-  //     let greet_counter = 0;
-  //     if (user.rows.length > 0) {
-  //       greet_counter = user.rows[0].greet_counter;
-  //       let first_name = user.rows[0].first_name;
-  //       let message = 'Hello, ${first_name} has been greeted ${greet_counter} time(s)';
-  //       return message;
-  //     } else {
-  //       return 'Name not found'
-  //     }
-  //   }
-  // }
-
   async function resetDataBase() {
     let results = await pool.query('delete from names')
-  return results.rows
+    return results.rows
   }
 
   return {
 
     list: listOfAllGreetedNames,
     greetPerson: greetPerson,
-    numberOfGreets: getNumberofGreets,
     greetCountNumber: greetCounterLength,
-    // theMessage: returnMessage,
     reset: resetDataBase
-
+    //numberOfGreets: getNumberofGreets,
+    // theMessage: returnMessage,
   }
 }
+
+// async function getNumberofGreets() {
+//   let result = await pool.query('select greet_counter from names where first_name = $1', [name])
+//   console.log(result)
+//   return result.greet_counter
+// }
+
+// async function returnMessage(name) {
+//   if (name != '') {
+//     let user = await pool.query('SELECT * FROM names WHERE first_name = $1', [name]);
+//     let greet_counter = 0;
+//     if (user.rows.length > 0) {
+//       greet_counter = user.rows[0].greet_counter;
+//       let first_name = user.rows[0].first_name;
+//       let message = 'Hello, ${first_name} has been greeted ${greet_counter} time(s)';
+//       return message;
+//     } else {
+//       return 'Name not found'
+//     }
+//   }
+// }
